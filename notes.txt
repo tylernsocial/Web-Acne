@@ -1,0 +1,20 @@
+React Frontend
+- User uploads image
+- Shows image preview
+- Sends image to backend
+- Displays prediction and confidence
+
+        ↓
+
+Python Backend
+- Receives image
+- Preprocesses image
+- Loads final_model.keras
+- Runs prediction
+- Returns result as JSON
+
+        ↓
+
+Saved Model
+- final_model.keras
+- class_names.json
