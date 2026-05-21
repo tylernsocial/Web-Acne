@@ -52,6 +52,7 @@ def predict_acne_class(image_file):
         "confidence": round(confidence * 100, 2)
     }
 
-if __name__ == "__main__":
-    result = predict_acne_class("test.jpg")
-    print(result)
+## test
+# if __name__ == "__main__":
+#     result = predict_acne_class("test.jpg")
+#     print(result)
