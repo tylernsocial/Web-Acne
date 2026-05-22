@@ -18,3 +18,7 @@ Python Backend
 Saved Model
 - final_model.keras
 - class_names.json
+
+flask = python framework which will be used to create web servers and APIs
+
+need to use flask since react wont be able to load and run the tf Model
