@@ -46,8 +46,35 @@ def home():
         "message": "The backend server is running!"
     })
 
+@app.route("/predict", methods=["POST"])
+def predict():
+    if "image" not in request.files:
+        return jsonify({
+            "error": "No image file was uploaded"
+        })
+    
+    image_file = request.files["image"]
 
+    if image_file.filename == "":
+        return jsonify({
+            "error": "No selected file"
+        }), 400
+    
+    if not allowed_file(image_file.filename):
+        return jsonify({
+            "error": "Invalid file type. Please upload a PNG, JPG, JPEG, or WEBP image."
+        }), 400
+    
+    try:
+        result = predict_acne_class(image_file)
+        return jsonify(result)
+    
+    except Exception as e:
+        return jsonify({
+            "error": str(e)
+        }), 500
 
 
 if __name__ == "__main__":
     app.run(debug=True)
+
