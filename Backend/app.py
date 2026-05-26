@@ -43,8 +43,14 @@ from pathlib import Path
 
 app = Flask(__name__)
 CORS(app)
-
+app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024 # limits uploads to 5 MB
 EXTENSIONS = {"png", "jpg", "jpeg", "webp"}
+
+@app.errorhandler(413)
+def file_too_large(error):
+    return jsonify({
+        "error": "File is too large. Please upload an image smaller than 5 MB."
+    }), 413
 
 def allowed_file(filename):
     ext = Path(filename).suffix.lower().replace(".", "") ## gets .JPG -> jpg
