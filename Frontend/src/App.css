@@ -39,3 +39,11 @@ button {
 button:hover {
   background-color: #444;
 }
+
+.preview-image {
+  width: 250px;
+  max-height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-top: 10px;
+}
