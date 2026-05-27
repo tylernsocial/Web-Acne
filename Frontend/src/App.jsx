@@ -1,4 +1,4 @@
-import { useState } from 'react'; /* allows a component remember information*/
+import { useState, useRef } from 'react'; /* allows a component remember information*/
 import './App.css';
 
 function App() { /* creates a react element called App which is reusable piece of UI*/
@@ -8,6 +8,8 @@ function App() { /* creates a react element called App which is reusable piece o
   const [prediction, setPrediction] = useState(null); /* the model result from flask */
   const [loading, setLoading] = useState(false); /* whether the app is currently waiting for the backend */
   const [error, setError] = useState(null); /* stores and error message*/
+
+  const fileInputRef = useRef(null); /* reference to the file input*/
 
   function handleImageChange(event) { /* runs when the user pickers a file*/
     const file = event.target.files[0]; /* event contains information about what just happened, the line means get the first file the user selected*/
@@ -89,6 +91,10 @@ function App() { /* creates a react element called App which is reusable piece o
     setPrediction(null);
     setError(null);
 
+    if(fileInputRef.current){
+      fileInputRef.current.value = ""; /* clears the actual file input box */
+    }
+
   }
 
   return ( /*everything inside return is what appears on the screen*/
@@ -99,6 +105,7 @@ function App() { /* creates a react element called App which is reusable piece o
       <div className="upload-box">
         <input 
           type="file" 
+          ref={fileInputRef}
           accept="image/*"
           onChange={handleImageChange} /*when user selects a file run the function*/
         />
