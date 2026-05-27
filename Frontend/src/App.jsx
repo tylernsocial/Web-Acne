@@ -75,10 +75,17 @@ function App() { /* creates a react element called App which is reusable piece o
       setLoading(false);
     }
   }
-  
+  /* function that formats the json string*/
+  function formatPrediction(label){
+    if (!label){
+      return "";
+    }
+    return label.replaceAll("_", " ").split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+  }
+
   return ( /*everything inside return is what appears on the screen*/
     <div className="app">
-      <h1>Acne Classifier</h1>
+      <h1>WW-Acne All In One Acne Tracker And Classifier</h1>
       <p>Upload an image to classify acne severity.</p>
 
       <div className="upload-box">
@@ -110,7 +117,15 @@ function App() { /* creates a react element called App which is reusable piece o
         {prediction && (
           <div className="result-box">
             <h2>Prediction Result</h2>
-            <p>{JSON.stringify(prediction)}</p>
+
+            <p>
+              <strong>Prediction:</strong>{" "}
+              {formatPrediction(prediction.prediction)}
+            </p>
+            <p>
+              <strong>Confidence:</strong>{" "}
+              {Number(prediction.confidence).toFixed(2)}.%
+            </p>
           </div>
         )}
       </div>
