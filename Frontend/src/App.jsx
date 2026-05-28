@@ -162,56 +162,66 @@ function App() { /* creates a react element called App which is reusable piece o
             onDrop={handleDrop}
             onDragOver={handleDragOver}
           >
-            <p className="drop-text">Drag and drop an image here, or choose a file</p>
+            {/* left side of the classifier card: upload controls */}
+            <div className="upload-controls">
+              <p className="drop-text">Drag and drop an image here, or choose a file</p>
 
-            <input 
-              type="file" 
-              ref={fileInputRef}
-              accept="image/*"
-              onChange={handleImageChange} /* when user selects a file run the function */
-            />
-            
-            {selectedImage && ( /* react conditional this says if SI exits then show this paragraph */
-              <p className="file-name">Selected file: {selectedImage.name}</p>
-            )}
-
-            {previewUrl && (
-              <img 
-                src={previewUrl} 
-                alt="Selected preview" 
-                className="preview-image"
+              <input 
+                type="file" 
+                ref={fileInputRef}
+                accept="image/*"
+                onChange={handleImageChange} /* when user selects a file run the function */
               />
-            )}
+              
+              {selectedImage && ( /* react conditional this says if SI exits then show this paragraph */
+                <p className="file-name">Selected file: {selectedImage.name}</p>
+              )}
 
-            <button onClick={handleClassifyImage} disabled={loading}> {/* when the button is clicked, run the function, if loading is true, disable the button, and show classifying, otherwise show classify image */}
-              {loading ? "Classifying..." : "Classify Image"}
-            </button>
-
-            {selectedImage && (
-              <button type="button" onClick={clearImage} className="clear-button">
-                Clear Image
+              <button onClick={handleClassifyImage} disabled={loading}> {/* when the button is clicked, run the function, if loading is true, disable the button, and show classifying, otherwise show classify image */}
+                {loading ? "Classifying..." : "Classify Image"}
               </button>
-            )}
 
-            {error && (
-              <p className="error">{error}</p>
-            )}
+              {selectedImage && (
+                <button type="button" onClick={clearImage} className="clear-button">
+                  Clear Image
+                </button>
+              )}
 
-            {prediction && (
-              <div className="result-box">
-                <h2>Prediction Result</h2>
+              {error && (
+                <p className="error">{error}</p>
+              )}
+            </div>
 
-                <p>
-                  <strong>Prediction:</strong>{" "}
-                  {formatPrediction(prediction.prediction)}
-                </p>
+            {/* right side of the classifier card: image preview and result */}
+            <div className="preview-result-area">
+              {previewUrl ? (
+                <img 
+                  src={previewUrl} 
+                  alt="Selected preview" 
+                  className="preview-image"
+                />
+              ) : (
+                <div className="empty-preview">
+                  <p>No image selected</p>
+                </div>
+              )}
 
-                <p>
-                  <strong>Confidence:</strong>{" "}
-                  {Number(prediction.confidence).toFixed(2)}%
-                </p>
-              </div>
-            )}
+              {prediction && (
+                <div className="result-box">
+                  <h2>Prediction Result</h2>
+
+                  <p>
+                    <strong>Prediction:</strong>{" "}
+                    {formatPrediction(prediction.prediction)}
+                  </p>
+
+                  <p>
+                    <strong>Confidence:</strong>{" "}
+                    {Number(prediction.confidence).toFixed(2)}%
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </section>
 

@@ -83,7 +83,7 @@ body {
 /* Main two-column container */
 .main-card {
   width: 100%;
-  max-width: 1180px;
+  max-width: 1240px;
   min-height: 680px;
   padding: 18px;
 
@@ -93,8 +93,9 @@ body {
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
 
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
+  grid-template-columns: 1.2fr 0.8fr;
   gap: 18px;
+  align-items: stretch;
 }
 
 /* Left side classifier panel */
@@ -130,7 +131,7 @@ body {
 
 .panel-description {
   margin: 0;
-  max-width: 360px;
+  max-width: 520px;
   color: #b8c3c7;
   line-height: 1.6;
   font-size: 1rem;
@@ -145,10 +146,27 @@ body {
   border: 1px dashed rgba(168, 199, 232, 0.5);
   border-radius: 24px;
 
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 20px;
+  align-items: start;
+}
+
+/* Left side of upload card */
+.upload-controls {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
+}
+
+/* Right side of upload card */
+.preview-result-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  min-height: 100%;
 }
 
 .drop-text {
@@ -200,6 +218,26 @@ input[type="file"]::file-selector-button {
 
   text-align: center;
   font-size: 0.92rem;
+}
+
+.empty-preview {
+  width: 100%;
+  max-width: 280px;
+  min-height: 280px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 22px;
+  color: #b8c3c7;
+  text-align: center;
+}
+
+.empty-preview p {
+  margin: 0;
 }
 
 .preview-image {
@@ -300,6 +338,7 @@ button:disabled {
   position: relative;
   overflow: hidden;
   padding: 34px;
+  min-height: 680px;
 
   background:
     linear-gradient(135deg, rgba(168, 199, 232, 0.95), rgba(234, 241, 248, 0.92)),
@@ -381,22 +420,28 @@ button:disabled {
 
 .tracker-list {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
   gap: 14px;
 }
 
 /* Tablet/mobile responsiveness */
-@media (max-width: 950px) {
+@media (max-width: 1100px) {
   .main-card {
     grid-template-columns: 1fr;
   }
 
   .tracker-panel {
-    min-height: 420px;
+    min-height: 520px;
+  }
+}
+
+@media (max-width: 850px) {
+  .upload-box {
+    grid-template-columns: 1fr;
   }
 
-  .tracker-content h2 {
-    font-size: 2.4rem;
+  .empty-preview {
+    min-height: 220px;
   }
 }
 
@@ -439,10 +484,6 @@ button:disabled {
 
   .tracker-content h2 {
     font-size: 2rem;
-  }
-
-  .tracker-list {
-    grid-template-columns: 1fr;
   }
 
   .upload-box {
