@@ -14,26 +14,10 @@ function App() { /* creates a react element called App which is reusable piece o
   function handleImageChange(event) { /* runs when the user pickers a file*/
     const file = event.target.files[0]; /* event contains information about what just happened, the line means get the first file the user selected*/
 
-    if (!file){
+    if (!file) {
       return;
     }
 
-    // if (!file.type.startsWith("image/")) {
-    //   setSelectedImage(file);
-    //   setPreviewUrl(null);
-    //   setPrediction(null);
-    //   setError("Invalid file type. Please upload an image file.");
-
-    //   /* Reset the file input so the bad file is cleared*/
-    //   event.target.value = "";
-    //   return;
-    // }
-    // setSelectedImage(file);
-    // const imageUrl = URL.createObjectURL(file); /*takes the file and creates a temp url for it so that react can also use it inside an image tag */
-    // setPreviewUrl(imageUrl);
-      
-    // setPrediction(null);
-    // setError(null)
     validateAndSetImage(file);
   }
 
@@ -61,13 +45,13 @@ function App() { /* creates a react element called App which is reusable piece o
       
       let data;
 
-      try{
-        data = await response.json();/* waits for backend response and converts it into javascript data */
+      try {
+        data = await response.json(); /* waits for backend response and converts it into javascript data */
       } catch {
         data = { error: "Something went wrong. The server did not return a valid response." };
       }
       
-      if (!response.ok) { /* backend sends a response with a status code,200 is succeess, 400 bad request, 404 route not found, 500 backend server error*/
+      if (!response.ok) { /* backend sends a response with a status code, 200 is success, 400 bad request, 404 route not found, 500 backend server error*/
         throw new Error(data.error || "Something went wrong with the prediction.");
       }
 
@@ -78,26 +62,33 @@ function App() { /* creates a react element called App which is reusable piece o
       setLoading(false);
     }
   }
+
   /* function that formats the json string*/
-  function formatPrediction(label){
-    if (!label){
+  function formatPrediction(label) {
+    if (!label) {
       return "";
     }
-    return label.replaceAll("_", " ").split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+
+    return label
+      .replaceAll("_", " ")
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
   }
+
   /* clears all the states*/
-  function clearImage(){
+  function clearImage() {
     setSelectedImage(null);
     setPreviewUrl(null);
     setPrediction(null);
     setError(null);
 
-    if(fileInputRef.current){
+    if (fileInputRef.current) {
       fileInputRef.current.value = ""; /* clears the actual file input box */
     }
-
   }
 
+  /* validates the selected file and creates the image preview */
   function validateAndSetImage(file) {
     if (!file.type.startsWith("image/")) {
       setSelectedImage(null);
@@ -114,13 +105,14 @@ function App() { /* creates a react element called App which is reusable piece o
 
     setSelectedImage(file);
 
-    const imageUrl = URL.createObjectURL(file);
+    const imageUrl = URL.createObjectURL(file); /* takes the file and creates a temp url for it so that react can also use it inside an image tag */
     setPreviewUrl(imageUrl);
 
     setPrediction(null);
     setError(null);
   }
 
+  /* runs when the user drops a file into the upload area */
   function handleDrop(event) {
     event.preventDefault();
 
@@ -133,72 +125,136 @@ function App() { /* creates a react element called App which is reusable piece o
     validateAndSetImage(file);
   }
 
+  /* allows the browser to accept dropped files */
   function handleDragOver(event) {
     event.preventDefault();
   }
 
-  return ( /*everything inside return is what appears on the screen*/
+  return ( /* everything inside return is what appears on the screen */
     <div className="app">
-      <h1>WW-Acne All In One Acne Tracker And Classifier</h1>
-      <p>Upload an image to classify acne severity.</p>
 
-      <div 
-      className="upload-box"
-      onDrop={handleDrop}
-      onDragOver={handleDragOver}
-      >
-        <p className="drop-text"> Drag and drop an image here, or choose a file</p>
-        <input 
-          type="file" 
-          ref={fileInputRef}
-          accept="image/*"
-          onChange={handleImageChange} /*when user selects a file run the function*/
-        />
-        
-        {selectedImage && ( /*react conditional this says if SI exits then show this paragraph*/
-          <p className="file-name">Selected file: {selectedImage.name}</p>
-        )}
+      {/* floating top navbar */}
+      <nav className="navbar">
+        <div className="logo">WW-Acne</div>
 
-        {previewUrl && (
-          <img 
-            src={previewUrl} 
-            alt="Selected preview" 
-            className="preview-image"
-          />
-        )}
+        <div className="nav-links">
+          <span>Classifier</span>
+          <span>Tracker</span>
+          <span>About</span>
+        </div>
 
-        <button onClick={handleClassifyImage} disabled={loading}> {/* when the button is clicked, run the function, if loading is true, disable the button, and show classifiying, otherwise show classify image */}
-          {loading ? "Classifying..." : "Classify Image"}
-        </button>
-        {selectedImage && (
-          <button type="button" onClick={clearImage} className="clear-button">
-            Clear Image
-          </button>
-        )}
-        {error && (
-          <p className="error">{error}</p>
-        )}
-        
+        <button className="nav-button">Contact Us</button>
+      </nav>
 
-        
+      {/* main two-column layout */}
+      <main className="main-card">
 
-        {prediction && (
-          <div className="result-box">
-            <h2>Prediction Result</h2>
-
-            <p>
-              <strong>Prediction:</strong>{" "}
-              {formatPrediction(prediction.prediction)}
-            </p>
-            <p>
-              <strong>Confidence:</strong>{" "}
-              {Number(prediction.confidence).toFixed(2)}.%
+        {/* left side: working classifier */}
+        <section className="classifier-panel">
+          <div className="panel-header">
+            <p className="eyebrow">AI Skin Analysis</p>
+            <h1>Acne Classifier</h1>
+            <p className="panel-description">
+              Upload an image to classify acne severity using your trained model.
             </p>
           </div>
-        )}
-      </div>
+
+          <div 
+            className="upload-box"
+            onDrop={handleDrop}
+            onDragOver={handleDragOver}
+          >
+            <p className="drop-text">Drag and drop an image here, or choose a file</p>
+
+            <input 
+              type="file" 
+              ref={fileInputRef}
+              accept="image/*"
+              onChange={handleImageChange} /* when user selects a file run the function */
+            />
+            
+            {selectedImage && ( /* react conditional this says if SI exits then show this paragraph */
+              <p className="file-name">Selected file: {selectedImage.name}</p>
+            )}
+
+            {previewUrl && (
+              <img 
+                src={previewUrl} 
+                alt="Selected preview" 
+                className="preview-image"
+              />
+            )}
+
+            <button onClick={handleClassifyImage} disabled={loading}> {/* when the button is clicked, run the function, if loading is true, disable the button, and show classifying, otherwise show classify image */}
+              {loading ? "Classifying..." : "Classify Image"}
+            </button>
+
+            {selectedImage && (
+              <button type="button" onClick={clearImage} className="clear-button">
+                Clear Image
+              </button>
+            )}
+
+            {error && (
+              <p className="error">{error}</p>
+            )}
+
+            {prediction && (
+              <div className="result-box">
+                <h2>Prediction Result</h2>
+
+                <p>
+                  <strong>Prediction:</strong>{" "}
+                  {formatPrediction(prediction.prediction)}
+                </p>
+
+                <p>
+                  <strong>Confidence:</strong>{" "}
+                  {Number(prediction.confidence).toFixed(2)}%
+                </p>
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* right side: future acne tracker preview */}
+        <section className="tracker-panel">
+          <div className="tracker-content">
+            <p className="eyebrow">Coming Soon</p>
+            <h2>Acne Tracker</h2>
+
+            <p className="tracker-description">
+              In the future, this section can help users track lifestyle habits and skin progress over time.
+            </p>
+
+            <div className="tracker-preview-card large-preview">
+              <span>Progress Overview</span>
+              <strong>Weekly skin check-ins</strong>
+              <p>Compare acne changes across days, weeks, and routines.</p>
+            </div>
+
+            <div className="tracker-list">
+              <div className="tracker-preview-card">
+                <span>Food Logs</span>
+                <p>Track meals and possible triggers.</p>
+              </div>
+
+              <div className="tracker-preview-card">
+                <span>Sleep</span>
+                <p>Record sleep patterns and stress.</p>
+              </div>
+
+              <div className="tracker-preview-card">
+                <span>Skincare</span>
+                <p>Monitor products and routine changes.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
     </div>
   );
 }
 
-export default App; /*this allows another file usually main.jsx to import and display the App component, so App.jsx defines the page, and main.jsx actually puts it onto the website*/
+export default App; /* this allows another file usually main.jsx to import and display the App component, so App.jsx defines the page, and main.jsx actually puts it onto the website */
