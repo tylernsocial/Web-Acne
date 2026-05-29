@@ -130,6 +130,67 @@ function App() { /* creates a react element called App which is reusable piece o
     event.preventDefault();
   }
 
+  /* gets the explanation for the prediction label */
+  function getAcneInfo(label) {
+    return acneInfo[label] || {
+      title: formatPrediction(label),
+      description:
+        "This prediction label does not have a detailed explanation yet.",
+      details: [
+        "You can add a custom explanation for this class later."
+      ]
+    };
+  }
+
+  /* explanation content for each acne class */
+  const acneInfo = {
+    comedonal_open: {
+      title: "Open Comedonal Acne",
+      description:
+        "Open comedonal acne usually refers to blackheads. These happen when pores become clogged with oil and dead skin cells, but the pore remains open at the surface.",
+      details: [
+        "Commonly appears as small dark spots or bumps.",
+        "Usually considered non-inflammatory acne.",
+        "Often linked to clogged pores rather than red swollen bumps."
+      ]
+    },
+
+    comedonal_closed: {
+      title: "Closed Comedonal Acne",
+      description:
+        "Closed comedonal acne usually refers to whiteheads. These happen when pores become clogged with oil and dead skin cells while the pore stays closed at the surface.",
+      details: [
+        "Commonly appears as small flesh-colored or white bumps.",
+        "Usually considered non-inflammatory acne.",
+        "Can sometimes develop into inflamed pimples."
+      ]
+    },
+
+    inflammatory_acne: {
+      title: "Inflammatory Acne",
+      description:
+        "Inflammatory acne includes red, swollen, or tender acne lesions. This can include papules, pustules, nodules, and more severe cystic acne depending on the depth and severity.",
+      details: [
+        "Papules are small inflamed bumps without visible pus.",
+        "Pustules are inflamed bumps that contain pus.",
+        "Nodules and cystic acne are deeper, more painful forms that can sit under the skin and may increase the risk of scarring.",
+        "Persistent, painful, or worsening inflammatory acne should be checked by a healthcare professional."
+      ]
+    },
+
+    acne_scars: {
+      title: "Acne Scars",
+      description:
+        "Acne scars are marks or texture changes left behind after acne has healed. They can appear as dark spots, discoloration, indents, or raised areas depending on the skin response.",
+      details: [
+        "Post-acne marks may look red, brown, or darker than the surrounding skin.",
+        "Indented scars can appear as small pits or uneven texture.",
+        "Raised scars can form when the skin produces extra tissue during healing.",
+        "Scars and dark marks can take time to fade, and persistent scarring may benefit from professional treatment."
+      ]
+    }
+  };
+
   return ( /* everything inside return is what appears on the screen */
     <div className="app">
 
@@ -192,7 +253,7 @@ function App() { /* creates a react element called App which is reusable piece o
               )}
             </div>
 
-            {/* right side of the classifier card: image preview and result */}
+            {/* right side of the classifier card: image preview and prediction summary */}
             <div className="preview-result-area">
               {previewUrl ? (
                 <img 
@@ -206,6 +267,7 @@ function App() { /* creates a react element called App which is reusable piece o
                 </div>
               )}
 
+              {/* this box only shows the prediction and confidence */}
               {prediction && (
                 <div className="result-box">
                   <h2>Prediction Result</h2>
@@ -222,6 +284,25 @@ function App() { /* creates a react element called App which is reusable piece o
                 </div>
               )}
             </div>
+
+            {/* this box spans across the bottom and explains the prediction */}
+            {prediction && (
+              <div className="acne-info-box">
+                <h3>{getAcneInfo(prediction.prediction).title}</h3>
+
+                <p>{getAcneInfo(prediction.prediction).description}</p>
+
+                <ul>
+                  {getAcneInfo(prediction.prediction).details.map((detail, index) => (
+                    <li key={index}>{detail}</li>
+                  ))}
+                </ul>
+
+                <p className="medical-note">
+                  This is not a medical diagnosis. For painful, worsening, or persistent acne, consider speaking with a healthcare professional.
+                </p>
+              </div>
+            )}
           </div>
         </section>
 

@@ -166,7 +166,6 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 14px;
-  min-height: 100%;
 }
 
 .drop-text {
@@ -310,9 +309,8 @@ button:disabled {
 /* Result card */
 .result-box {
   width: 100%;
-  max-width: 360px;
-  margin-top: 4px;
-  padding: 20px;
+  max-width: 300px;
+  padding: 18px;
 
   background: rgba(255, 255, 255, 0.95);
   border-radius: 22px;
@@ -322,15 +320,15 @@ button:disabled {
 }
 
 .result-box h2 {
-  margin: 0 0 14px;
+  margin: 0 0 12px;
   color: #1f2a2e;
   font-size: 1.25rem;
 }
 
 .result-box p {
-  margin: 8px 0;
+  margin: 7px 0;
   color: #2d3a3f;
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
 
 /* Right side tracker preview panel */
@@ -489,4 +487,48 @@ button:disabled {
   .upload-box {
     padding: 18px;
   }
+}
+.acne-info-box {
+  grid-column: 1 / -1;
+  width: 100%;
+  padding: 22px;
+
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 22px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+
+  color: #1f2a2e;
+}
+
+.acne-info-box h3 {
+  margin: 0 0 10px;
+  color: #1f2a2e;
+  font-size: 1.15rem;
+}
+
+.acne-info-box p {
+  margin: 0 0 12px;
+  color: #2d3a3f;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.acne-info-box ul {
+  margin: 12px 0;
+  padding-left: 20px;
+  color: #2d3a3f;
+}
+
+.acne-info-box li {
+  margin-bottom: 8px;
+  line-height: 1.45;
+  font-size: 0.92rem;
+}
+
+.medical-note {
+  margin-top: 14px !important;
+  padding-top: 14px;
+  border-top: 1px solid rgba(31, 42, 46, 0.14);
+  color: #596970 !important;
+  font-size: 0.84rem !important;
 }
