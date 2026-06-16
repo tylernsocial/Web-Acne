@@ -4,6 +4,8 @@ This project is a full-stack web application that allows users to upload a facia
 
 The main goal of this project was to combine machine learning, web development, and user-focused design into one complete application. I created the acne classification model myself, trained it on a custom image dataset, built the backend API to serve predictions, and designed the frontend interface for users to interact with the model.
 
+My Custom Acne Classifier Repo: https://github.com/tylernsocial/Acne-Classifier
+
 ---
 
 ## Technologies Used
