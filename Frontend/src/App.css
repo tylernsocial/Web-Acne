@@ -1,8 +1,8 @@
 :root {
   --ink: #12232d;
   --muted: rgba(18, 35, 45, 0.68);
-  --glass-bg: rgba(245, 248, 250, 0.46);
-  --glass-strong: rgba(245, 248, 250, 0.68);
+  --glass-bg: rgba(245, 248, 250, 0.26);
+  --glass-strong: rgba(245, 248, 250, 0.46);
   --glass-soft: rgba(255, 255, 255, 0.18);
   --glass-border: rgba(255, 255, 255, 0.46);
   --shadow: 0 28px 80px rgba(34, 41, 48, 0.18);
@@ -180,6 +180,7 @@ select,
 }
 
 .navbar::before,
+.main-card::before,
 .classifier-panel::before,
 .tracker-panel::before,
 .upload-box::before,
@@ -195,6 +196,7 @@ select,
 }
 
 .navbar > *,
+.main-card > *,
 .classifier-panel > *,
 .upload-box > *,
 .popup-card > * {
@@ -435,12 +437,14 @@ input[type="file"]::file-selector-button:hover {
   max-width: 100%;
   min-height: 720px;
   padding: 18px;
-  background: rgba(245, 248, 250, 0.36);
+  background: rgba(245, 248, 250, 0.16);
   border-radius: 34px;
   display: grid;
   grid-template-columns: minmax(360px, 0.74fr) minmax(0, 1.56fr);
   gap: 18px;
   align-items: start;
+  backdrop-filter: blur(30px) saturate(170%);
+  -webkit-backdrop-filter: blur(30px) saturate(170%);
 }
 
 /* Left side classifier panel */
