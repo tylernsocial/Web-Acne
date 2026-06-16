@@ -2,6 +2,7 @@
 .tracker-panel {
   position: relative;
   min-width: 0;
+  max-width: 100%;
   padding: 0;
   border-radius: 28px;
   color: var(--ink);
@@ -30,15 +31,17 @@
   z-index: 1;
   padding: 18px 26px 18px 18px;
   display: grid;
-  grid-template-columns: minmax(380px, 1.18fr) minmax(285px, 0.95fr) minmax(250px, 0.82fr);
+  grid-template-columns: minmax(320px, 1.14fr) minmax(260px, 0.95fr) minmax(220px, 0.78fr);
   gap: 12px;
   align-items: start;
+  max-width: 100%;
 }
 
 .tracker-overview,
 .daily-log,
 .skin-log-card {
   min-width: 0;
+  max-width: 100%;
   border-radius: 22px;
 }
 
@@ -62,6 +65,7 @@
   line-height: 1.55;
   font-size: 0.92rem;
   font-weight: 700;
+  overflow-wrap: anywhere;
 }
 
 .tracker-calendar,
@@ -77,6 +81,18 @@
   -webkit-backdrop-filter: blur(16px) saturate(155%);
 }
 
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .tracker-panel,
+  .tracker-calendar,
+  .daily-log,
+  .skin-log-card,
+  .add-entry-card,
+  .skin-image-placeholder,
+  .tracker-image-preview {
+    background: rgba(245, 248, 250, 0.78);
+  }
+}
+
 /* Monthly calendar card */
 .tracker-calendar {
   padding: 14px;
@@ -85,13 +101,14 @@
 
 .calendar-top {
   display: grid;
-  grid-template-columns: 38px 1fr 38px;
+  grid-template-columns: 38px minmax(0, 1fr) 38px;
   align-items: center;
   gap: 8px;
   margin-bottom: 16px;
 }
 
 .calendar-title {
+  min-width: 0;
   text-align: center;
 }
 
@@ -107,6 +124,7 @@
   color: rgba(18, 35, 45, 0.58);
   font-size: 0.75rem;
   font-weight: 700;
+  overflow-wrap: anywhere;
 }
 
 .month-arrow {
@@ -149,7 +167,7 @@
 .calendar-day,
 .empty-calendar-day {
   min-width: 0;
-  min-height: 44px;
+  min-height: clamp(36px, 4vw, 44px);
   width: 100%;
   border-radius: 14px;
 }
@@ -231,11 +249,13 @@
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  overflow-wrap: anywhere;
 }
 
 .add-bubble-btn {
   width: auto;
   min-width: 52px;
+  flex: 0 0 auto;
   min-height: 28px;
   padding: 7px 11px;
   border-radius: 999px;
@@ -264,6 +284,7 @@
   font-size: 0.78rem;
   font-style: italic;
   line-height: 1.35;
+  overflow-wrap: anywhere;
 }
 
 .tracker-bubble {
@@ -304,7 +325,7 @@
 
 .add-entry-buttons {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 7px;
   margin-top: 7px;
 }
@@ -333,6 +354,7 @@
   flex-direction: column;
   gap: 14px;
   border-radius: 22px;
+  min-width: 0;
 }
 
 .skin-image-control {
@@ -342,6 +364,7 @@
 /* keeps the skin-image file input readable inside the narrower right card */
 .skin-log-card input[type="file"] {
   font-size: 0.72rem;
+  max-width: 100%;
 }
 
 .skin-log-card input[type="file"]::file-selector-button {
@@ -385,6 +408,7 @@
   display: grid;
   gap: 10px;
   margin-top: auto;
+  min-width: 0;
 }
 
 /* Centered save message that appears after pressing Save Log */
@@ -418,20 +442,26 @@
   }
 }
 
-@media (max-width: 1250px) {
+@media (max-width: 1200px) {
   .tracker-content {
-    grid-template-columns: minmax(430px, 1.15fr) minmax(260px, 0.85fr);
+    padding: 16px;
+    grid-template-columns: minmax(300px, 1.08fr) minmax(260px, 0.92fr);
   }
 
   .skin-log-card {
     grid-column: 1 / -1;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 220px;
+    grid-template-columns: minmax(0, 1fr) minmax(210px, 0.45fr);
     align-items: end;
+  }
+
+  .skin-log-card .skin-image-control,
+  .skin-log-card .tracker-buttons {
+    align-self: stretch;
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 900px) {
   .tracker-content {
     padding: 12px;
     grid-template-columns: 1fr;
@@ -446,5 +476,72 @@
   .skin-log-card {
     grid-column: auto;
     display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  .tracker-panel {
+    border-radius: 20px;
+  }
+
+  .tracker-content {
+    padding: 8px;
+    gap: 10px;
+  }
+
+  .tracker-overview,
+  .daily-log,
+  .skin-log-card {
+    padding: 12px;
+    border-radius: 18px;
+  }
+
+  .tracker-overview h2 {
+    font-size: clamp(2rem, 11vw, 2.55rem);
+  }
+
+  .tracker-description {
+    margin-bottom: 18px;
+  }
+
+  .tracker-calendar {
+    padding: 10px;
+    border-radius: 18px;
+  }
+
+  .calendar-top {
+    grid-template-columns: 34px minmax(0, 1fr) 34px;
+  }
+
+  .month-arrow {
+    width: 34px;
+    height: 34px;
+  }
+
+  .calendar-weekdays,
+  .month-grid {
+    gap: 3px;
+  }
+
+  .calendar-day,
+  .empty-calendar-day {
+    min-height: 36px;
+    border-radius: 12px;
+  }
+
+  .calendar-day strong {
+    font-size: 0.82rem;
+  }
+
+  .bubble-section-header {
+    align-items: flex-start;
+  }
+
+  .add-entry-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .skin-image-placeholder {
+    min-height: 160px;
   }
 }

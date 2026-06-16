@@ -1,9 +1,9 @@
 :root {
   --ink: #12232d;
   --muted: rgba(18, 35, 45, 0.68);
-  --glass-bg: rgba(255, 255, 255, 0.2);
-  --glass-strong: rgba(255, 255, 255, 0.32);
-  --glass-soft: rgba(255, 255, 255, 0.12);
+  --glass-bg: rgba(245, 248, 250, 0.46);
+  --glass-strong: rgba(245, 248, 250, 0.68);
+  --glass-soft: rgba(255, 255, 255, 0.18);
   --glass-border: rgba(255, 255, 255, 0.46);
   --shadow: 0 28px 80px rgba(34, 41, 48, 0.18);
   --inner-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.7),
@@ -14,10 +14,15 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   background: #eef0f2;
+  overflow-x: hidden;
 }
 
 .app {
@@ -72,8 +77,8 @@ body {
 }
 
 .avatar-image-left.avatar-theme-pink {
-  bottom: -178px;
-  height: clamp(810px, 114vh, 1160px);
+  bottom: -162px;
+  height: clamp(760px, 108vh, 1080px);
 }
 
 .avatar-image-left.avatar-theme-blue {
@@ -84,6 +89,15 @@ body {
   right: clamp(-210px, -11vw, -126px);
   top: 90px;
   width: clamp(500px, 45vw, 820px);
+}
+
+.avatar-image-right.avatar-theme-pink {
+  top: auto;
+  right: clamp(-160px, -8vw, -96px);
+  bottom: -115px;
+  width: auto;
+  height: clamp(650px, 94vh, 920px);
+  object-position: bottom right;
 }
 
 .avatar-image-left.avatar-theme-box {
@@ -122,6 +136,30 @@ select,
   box-shadow: var(--shadow), var(--inner-highlight);
   backdrop-filter: blur(18px) saturate(160%);
   -webkit-backdrop-filter: blur(18px) saturate(160%);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .main-card,
+  .classifier-panel,
+  .upload-box,
+  .drop-text,
+  .classifier-file-picker,
+  .empty-preview,
+  .preview-image,
+  .result-box,
+  .acne-info-box,
+  .popup-card,
+  .popup-note,
+  .learn-acne-card,
+  input[type="file"],
+  select,
+  .file-name,
+  .error,
+  .navbar,
+  .nav-actions,
+  .avatar-theme-menu {
+    background: rgba(245, 248, 250, 0.78);
+  }
 }
 
 .navbar,
@@ -178,6 +216,7 @@ select,
 .navbar {
   flex: 0 1 960px;
   width: min(100%, 960px);
+  max-width: 100%;
   min-height: 68px;
   padding: 12px 16px;
   border: 1px solid var(--glass-border);
@@ -203,6 +242,7 @@ select,
   font-weight: 900;
   letter-spacing: -0.04em;
   white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 
 .logo::before {
@@ -214,6 +254,8 @@ select,
   align-items: center;
   justify-content: center;
   gap: 10px;
+  min-width: 0;
+  flex-wrap: wrap;
 }
 
 .nav-link-button,
@@ -260,6 +302,8 @@ input[type="file"]::file-selector-button,
   min-height: 46px;
   padding: 12px 22px;
   font-size: 0.92rem;
+  white-space: normal;
+  line-height: 1.15;
 }
 
 .nav-link-button:hover,
@@ -280,6 +324,8 @@ input[type="file"]::file-selector-button:hover {
   min-height: 46px;
   padding: 12px 22px;
   font-size: 0.92rem;
+  white-space: normal;
+  line-height: 1.15;
 }
 
 .nav-actions {
@@ -386,12 +432,13 @@ input[type="file"]::file-selector-button:hover {
 .main-card {
   z-index: 1;
   width: min(100%, 1560px);
+  max-width: 100%;
   min-height: 720px;
   padding: 18px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(245, 248, 250, 0.36);
   border-radius: 34px;
   display: grid;
-  grid-template-columns: minmax(450px, 0.75fr) minmax(0, 1.55fr);
+  grid-template-columns: minmax(360px, 0.74fr) minmax(0, 1.56fr);
   gap: 18px;
   align-items: start;
 }
@@ -401,6 +448,8 @@ input[type="file"]::file-selector-button:hover {
   padding: 34px;
   border-radius: 28px;
   align-self: start;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .panel-header {
@@ -431,11 +480,13 @@ input[type="file"]::file-selector-button:hover {
   line-height: 1.55;
   font-size: 0.95rem;
   font-weight: 700;
+  overflow-wrap: anywhere;
 }
 
 /* Upload card inside left panel */
 .upload-box {
   width: 100%;
+  max-width: 100%;
   padding: 20px;
   border-radius: 24px;
   display: grid;
@@ -477,6 +528,7 @@ input[type="file"]::file-selector-button:hover {
   font-size: 0.86rem;
   font-weight: 900;
   line-height: 1.35;
+  overflow-wrap: anywhere;
 }
 
 /* File input is allowed to use the full upload-control width so "No file chosen" is not cut off */
@@ -504,9 +556,12 @@ input[type="file"]::file-selector-button {
 .tracker-buttons button,
 .add-entry-buttons button {
   width: 100%;
+  max-width: 100%;
   min-height: 44px;
   padding: 11px 16px;
   font-size: 0.84rem;
+  white-space: normal;
+  line-height: 1.15;
 }
 
 .clear-button {
@@ -589,6 +644,7 @@ input[type="file"]::file-selector-button {
   margin: 6px 0;
   color: var(--muted);
   font-size: 0.84rem;
+  overflow-wrap: anywhere;
 }
 
 .acne-info-box {
@@ -609,6 +665,7 @@ input[type="file"]::file-selector-button {
   line-height: 1.5;
   font-size: 0.88rem;
   font-weight: 650;
+  overflow-wrap: anywhere;
 }
 
 .acne-info-box p {
@@ -676,12 +733,15 @@ input[type="file"]::file-selector-button {
 }
 
 .popup-card {
-  width: min(100%, 1040px);
-  max-height: 92vh;
+  width: min(1040px, calc(100vw - 32px));
+  max-width: 100%;
+  max-height: min(92vh, 860px);
   overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 34px;
   border-radius: 28px;
   color: var(--ink);
+  background: rgba(245, 248, 250, 0.72);
 }
 
 .popup-card h2 {
@@ -695,6 +755,7 @@ input[type="file"]::file-selector-button {
   color: var(--muted);
   line-height: 1.6;
   font-weight: 650;
+  overflow-wrap: anywhere;
 }
 
 .popup-steps {
@@ -749,6 +810,7 @@ input[type="file"]::file-selector-button {
   color: var(--muted);
   font-size: 0.88rem;
   font-weight: 650;
+  overflow-wrap: anywhere;
 }
 
 .learn-acne-card ul {
@@ -757,7 +819,7 @@ input[type="file"]::file-selector-button {
 }
 
 /* Tablet/mobile responsiveness */
-@media (max-width: 1420px) {
+@media (max-width: 1500px) {
   .main-card {
     grid-template-columns: 1fr;
   }
@@ -770,8 +832,8 @@ input[type="file"]::file-selector-button {
   }
 
   .avatar-image-left.avatar-theme-pink {
-    bottom: -188px;
-    height: clamp(820px, 114vh, 1100px);
+    bottom: -168px;
+    height: clamp(740px, 106vh, 1040px);
   }
 
   .avatar-image-left.avatar-theme-blue {
@@ -790,6 +852,13 @@ input[type="file"]::file-selector-button {
     top: 520px;
   }
 
+  .avatar-image-right.avatar-theme-pink {
+    top: auto;
+    right: -130px;
+    bottom: -112px;
+    height: clamp(620px, 90vh, 860px);
+  }
+
   .avatar-image-right.avatar-theme-box {
     right: -305px;
     top: auto;
@@ -797,6 +866,79 @@ input[type="file"]::file-selector-button {
     height: clamp(730px, 104vh, 990px);
   }
 
+}
+
+@media (max-width: 1200px) {
+  .app {
+    padding-inline: 14px;
+  }
+
+  .top-header {
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .navbar {
+    flex: 1 1 auto;
+    grid-template-columns: 1fr;
+    justify-items: stretch;
+  }
+
+  .logo {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .nav-actions {
+    flex: 0 1 auto;
+  }
+
+  .classifier-panel {
+    padding: 28px;
+  }
+
+  .upload-box {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .top-header {
+    flex-direction: column;
+  }
+
+  .nav-actions {
+    width: 100%;
+    margin-left: 0;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .nav-button {
+    flex: 1 1 220px;
+  }
+
+  .main-card {
+    min-height: 0;
+    padding: 12px;
+    border-radius: 28px;
+  }
+
+  .classifier-panel {
+    padding: 24px;
+  }
+
+  .upload-box {
+    grid-template-columns: 1fr;
+  }
+
+  .learn-acne-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .popup-card {
+    padding: 28px 22px;
+  }
 }
 
 @media (max-width: 760px) {
@@ -813,8 +955,8 @@ input[type="file"]::file-selector-button {
   }
 
   .avatar-image-left.avatar-theme-pink {
-    bottom: -142px;
-    height: clamp(670px, 100vh, 880px);
+    bottom: -126px;
+    height: clamp(600px, 92vh, 780px);
   }
 
   .avatar-image-left.avatar-theme-blue {
@@ -826,6 +968,14 @@ input[type="file"]::file-selector-button {
     right: -230px;
     top: 720px;
     opacity: 0.5;
+  }
+
+  .avatar-image-right.avatar-theme-pink {
+    top: auto;
+    right: -120px;
+    bottom: -88px;
+    width: auto;
+    height: clamp(520px, 82vh, 700px);
   }
 
   .avatar-image-right.avatar-theme-box {
@@ -852,6 +1002,11 @@ input[type="file"]::file-selector-button {
   .nav-links,
   .nav-actions {
     justify-content: center;
+  }
+
+  .logo {
+    white-space: normal;
+    line-height: 1.05;
   }
 
   .nav-links {
@@ -893,5 +1048,73 @@ input[type="file"]::file-selector-button {
   .empty-preview,
   .preview-image {
     min-height: 220px;
+  }
+}
+
+@media (max-width: 600px) {
+  .app {
+    padding: 12px 8px 20px;
+  }
+
+  .top-header {
+    margin-bottom: 14px;
+  }
+
+  .navbar,
+  .nav-actions {
+    border-radius: 18px;
+    padding: 10px;
+  }
+
+  .logo {
+    font-size: clamp(1.5rem, 9vw, 2rem);
+  }
+
+  .nav-link-button,
+  .nav-button {
+    flex: 1 1 100%;
+    min-height: 42px;
+    padding: 10px 14px;
+  }
+
+  .main-card {
+    padding: 8px;
+    border-radius: 22px;
+  }
+
+  .classifier-panel {
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .classifier-panel h1 {
+    font-size: clamp(2rem, 11vw, 2.55rem);
+  }
+
+  .upload-box {
+    padding: 14px;
+    border-radius: 20px;
+  }
+
+  .empty-preview,
+  .preview-image {
+    min-height: 180px;
+  }
+
+  .popup-overlay {
+    padding: 12px;
+    align-items: flex-start;
+  }
+
+  .popup-card {
+    width: min(100%, calc(100vw - 24px));
+    max-height: calc(100vh - 24px);
+    padding: 24px 18px;
+    border-radius: 22px;
+  }
+
+  .popup-card h2 {
+    padding-right: 42px;
+    font-size: 1.55rem;
   }
 }
