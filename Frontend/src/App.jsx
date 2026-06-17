@@ -277,7 +277,7 @@ function App() { /* creates a react element called App which is reusable piece o
   };
 
   return ( /* everything inside return is what appears on the screen */
-    <div className="app">
+    <div className={`app ${openPopup ? "popup-open" : ""}`}>
       <div className="avatar-backdrop" aria-hidden="true">
         <img
           src={activeAvatarPair.side}
