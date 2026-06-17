@@ -123,7 +123,7 @@ function App() { /* creates a react element called App which is reusable piece o
     formData.append("image", selectedImage); /* adds image to the package*/
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/predict", { /* for local use http://127.0.0.1:5000/predict sends request to flask, essentially fetch allows the frontend to talk to another server */
+      const response = await fetch("https://ttt8008-wellness-watch-acne-backend.hf.space/predict", { /* for local use http://127.0.0.1:5000/predict sends request to flask, essentially fetch allows the frontend to talk to another server */
         method: "POST", /* send data to the backend, POST request is usually for sending information in this case an uploaded image*/
         body: formData, /* the actual data that is being send, this case the image*/
       });
