@@ -442,6 +442,54 @@
   }
 }
 
+@media (max-width: 1500px) {
+  .tracker-content {
+    padding: 14px;
+    grid-template-columns: minmax(270px, 1.08fr) minmax(220px, 0.92fr) minmax(180px, 0.72fr);
+    gap: 10px;
+  }
+
+  .tracker-overview {
+    padding: 16px;
+  }
+
+  .daily-log,
+  .skin-log-card {
+    padding: 14px;
+  }
+
+  .tracker-overview h2 {
+    font-size: clamp(2.2rem, 3.4vw, 3rem);
+  }
+
+  .tracker-description {
+    margin-bottom: 20px;
+    font-size: 0.88rem;
+  }
+
+  .tracker-calendar {
+    padding: 12px;
+  }
+
+  .calendar-day,
+  .empty-calendar-day {
+    min-height: 36px;
+  }
+
+  .skin-image-placeholder {
+    min-height: 160px;
+  }
+
+  .skin-log-card input[type="file"] {
+    color: transparent;
+  }
+
+  .skin-log-card input[type="file"]::file-selector-button {
+    margin-right: 0;
+    color: var(--ink);
+  }
+}
+
 @media (max-width: 1200px) {
   .tracker-content {
     padding: 16px;
