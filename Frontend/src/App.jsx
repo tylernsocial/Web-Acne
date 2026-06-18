@@ -496,10 +496,10 @@ function App() { /* creates a react element called App which is reusable piece o
             {openPopup === "about" && (
               <div>
                 <p className="eyebrow">About</p>
-                <h2>About WWA</h2>
+                <h2>About Wellness Watch Acne</h2>
 
                 <p>
-                  WWA stands for Wellness Watch Acne. It is an all-in-one acne
+                  Wellness Watch Acne is an all-in-one acne
                   classification and tracking tool designed to help users better
                   understand their skin.
                 </p>
