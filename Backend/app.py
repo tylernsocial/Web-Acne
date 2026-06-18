@@ -36,13 +36,23 @@ response:
 
 
 
+import os
+
 from flask import Flask, request, jsonify 
 from flask_cors import CORS 
 from predict import predict_acne_class
 from pathlib import Path
 
 app = Flask(__name__)
-CORS(app)
+allowed_origins = [
+    origin.strip()
+    for origin in os.getenv(
+        "ALLOWED_ORIGINS",
+        "http://localhost:5173,http://127.0.0.1:5173,https://wellness-watch-acne.vercel.app",
+    ).split(",")
+    if origin.strip()
+]
+CORS(app, resources={r"/*": {"origins": allowed_origins}})
 app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024 # limits uploads to 5 MB
 EXTENSIONS = {"png", "jpg", "jpeg", "webp"}
 
@@ -92,12 +102,13 @@ def predict():
         result = predict_acne_class(image_file)
         return jsonify(result)
     
-    except Exception as e:
+    except Exception:
+        app.logger.exception("Prediction request failed")
         return jsonify({
-            "error": str(e)
+            "error": "Something went wrong while processing the image."
         }), 500
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=os.getenv("FLASK_DEBUG") == "1")
 

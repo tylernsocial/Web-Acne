@@ -380,6 +380,16 @@ python app.py
 
 The backend should now be running locally.
 
+By default, the backend allows browser requests from the local Vite dev server:
+
+```txt
+http://localhost:5173
+http://127.0.0.1:5173
+https://wellness-watch-acne.vercel.app/
+```
+
+When deploying the frontend, set `ALLOWED_ORIGINS` on the backend host to the deployed frontend URL. Multiple URLs can be separated with commas.
+
 ---
 
 ### Frontend Setup
