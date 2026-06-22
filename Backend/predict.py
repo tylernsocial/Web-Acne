@@ -48,8 +48,8 @@ def preprocess_image(image_file):
         processed_img = resize_with_padding(img, target_size=(224, 224), fill_color=(0, 0, 0))
 
         img_array = np.array(processed_img).astype("float32")
-        img_array = img_array / 255.0 ## normalize pixel values from 0-255 to 0-1
-        img_array = np.expand_dims(img_array, axis=0) ## shape becomes (1, 224, 224, 3)
+        img_array = tf.keras.applications.mobilenet_v2.preprocess_input(img_array)
+        img_array = np.expand_dims(img_array, axis=0)
 
         return img_array
 
